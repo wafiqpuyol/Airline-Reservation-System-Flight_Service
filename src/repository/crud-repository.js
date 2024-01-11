@@ -1,3 +1,5 @@
+const errorGenerator = require("../utils/error/error-generator");
+
 class CrudRepository {
     constructor(model) {
         this.model = model;
@@ -14,7 +16,8 @@ class CrudRepository {
     }
 
     async findById(id) {
-        const query = await this.model.findByPk(id)
+        const query = await this.model.findByPk(id);
+        return query;
     }
 
     async find(data) {
