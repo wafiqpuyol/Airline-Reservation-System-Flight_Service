@@ -2,34 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Airports', {
+    await queryInterface.createTable('Cities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      airportName: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-      },
-      code: {
+      cityName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
-      },
-      address: {
-        type: Sequelize.STRING,
-        unique: true,
-      },
-      cityId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Cities",
-          key: "id"
-        },
-        onDelete: "CASCADE"
       },
       createdAt: {
         allowNull: false,
@@ -42,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Airports');
+    await queryInterface.dropTable('Cities');
   }
 };
