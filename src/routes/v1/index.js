@@ -1,10 +1,12 @@
 const router = require('express').Router();
-const airplaneRoutes = require('./airplane-routes')
-const airportRoutes = require('./airport-routes')
-const cityRoutes = require('./city-routes')
+const AirplaneRoutes = require('./airplane-routes')
+const AirportRoutes = require('./airport-routes')
+const CityRoutes = require('./city-routes')
+const FlightRoutes = require('./flight-routes')
 
-router.use("/airplanes", airplaneRoutes);
-router.use("/airports", airportRoutes);
-router.use("/cities", cityRoutes);
+router.use("/airplanes", AirplaneRoutes);
+router.use("/airports", AirportRoutes);
+router.use("/cities", CityRoutes);
+router.use("/flights", FlightRoutes);
 
 module.exports = router;
