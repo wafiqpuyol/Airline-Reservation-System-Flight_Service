@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Flight.belongsTo(models.Airport, { foreignKey: 'arrival_airport_id', onDelete: "CASCADE" })
-      Flight.belongsTo(models.Airport, { foreignKey: 'departure_airport_id', onDelete: "CASCADE" })
-      Flight.belongsTo(models.Airplane, { foreignKey: 'airplane_id', onDelete: "CASCADE" })
+      Flight.belongsTo(models.Airport, { as: "ArrivalAirport", foreignKey: 'arrival_airport_id', onDelete: "CASCADE" })
+      Flight.belongsTo(models.Airport, { as: "DepartureAirport", foreignKey: 'departure_airport_id', onDelete: "CASCADE" })
+      Flight.belongsTo(models.Airplane, { as: "ChoduAirplanes", foreignKey: 'airplane_id', onDelete: "CASCADE" })
     }
   }
   Flight.init({

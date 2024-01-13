@@ -11,9 +11,6 @@ class FlightService {
 
     async createFlight(data) {
         try {
-            const { arrival_time, departure_time } = data;
-            // const times = utcTime(arrival_time, departure_time)
-            // console.log(times);
             const query = await flightRepository.create({ ...data });
             return query;
         } catch (error) {
@@ -25,7 +22,6 @@ class FlightService {
         let customFilters = {};
 
         if (query.trips) {
-            console.log("========>");
             const [departure_airport_id, arrival_airport_id] = query.trips.split('-');
             customFilters = {
                 [Op.and]: [

@@ -14,4 +14,8 @@ app.use('/api', apiRoutes)
 
 app.listen(ServerConfig.PORT, async () => {
     console.log(`server is running at ${ServerConfig.PORT}`);
+
+    // const { Airplane } = require('./models')
+    // const a = await Airplane.findByPk(1)
+    // console.log(await a.getChoduFlights())
 })
