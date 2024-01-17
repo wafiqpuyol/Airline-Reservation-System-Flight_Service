@@ -13,12 +13,11 @@ class FlightRepository extends CrudRepository {
     async getFlight(filter) {
         console.log(filter);
         const query = Flight.findAll({
-            // where: filter,
-            // include: [{ model: Airport }, Airplane]
+            where: filter,
             include: [
                 {
                     model: Airplane,
-                    as: "ChoduAirplanes",
+                    as: "airplane_details",
                     required: true
                 },
                 {
@@ -39,17 +38,6 @@ class FlightRepository extends CrudRepository {
         })
         return query;
     }
-
-    // async getFlightOfDepartureTime(time) {
-    //     const query = await Flight.findAll({
-    //         where: {
-
-    //         }
-
-    //     })
-    //     console.log(query);
-    //     return query
-    // }
 }
 
 module.exports = FlightRepository;
