@@ -53,11 +53,21 @@ class FlightService {
         }
     }
 
-    async getFlight(data) {
+    async getFlight(id) {
         try {
-            const query = await flightRepository.findById(data);
+            const query = await flightRepository.findById(id);
             return query;
         } catch (error) {
+            throw errorGenerator(error)
+        }
+    }
+
+    async updateSeat(data) {
+        try {
+            const query = await flightRepository.updateSeat(data.flightId, data.noOfSeat, data.dec);
+            return query;
+        } catch (error) {
+            console.log(error);
             throw errorGenerator(error)
         }
     }

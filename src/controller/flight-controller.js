@@ -67,4 +67,22 @@ const getFlight = async (req, res) => {
             .json(ErrorResponse)
     }
 }
-module.exports = { createFlight, getAllFlight, getFlight }
+
+
+const updateSeat = async (req, res) => {
+    try {
+        const flight = await flightService.updateSeat({ ...req.body, flightId: req.params.id })
+        SuccessResponse.message = 'Successfully Fetched Flight';
+        SuccessResponse.data = flight;
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong while fetching flight";
+        ErrorResponse.error = error;
+        return res
+            .status(error.statusCode)
+            .json(ErrorResponse)
+    }
+}
+module.exports = { createFlight, getAllFlight, getFlight, updateSeat }
