@@ -53,8 +53,8 @@ const getAllFlight = async (req, res) => {
 
 const getFlight = async (req, res) => {
     try {
-        const flight = await flightService(req.query)
-        SuccessResponse.message = 'Successfully Fetched all Flights';
+        const flight = await flightService.getFlight(req.params.id)
+        SuccessResponse.message = 'Successfully Fetched Flight';
         SuccessResponse.data = flight;
         return res
             .status(StatusCodes.OK)

@@ -7,7 +7,13 @@ router.post('/',
     FlightController.createFlight
 )
 
-router.get('/', FlightController.getAllFlight)
+router.get('/',
+    FlightController.getAllFlight
+)
+
+router.get('/:id',
+    FlightController.getFlight
+)
 
 
 module.exports = router;

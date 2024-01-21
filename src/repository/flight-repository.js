@@ -11,7 +11,6 @@ class FlightRepository extends CrudRepository {
     }
 
     async getFlight(filter) {
-        console.log(filter);
         const query = Flight.findAll({
             where: filter,
             include: [
@@ -24,14 +23,16 @@ class FlightRepository extends CrudRepository {
                     model: Airport,
                     as: "DepartureAirport",
                     on: {
-                        col1: Sequelize.where(Sequelize.col('Flight.departure_airport_id'), "=", Sequelize.col('DepartureAirport.code')),
+                        col1: Sequelize.where
+                            (Sequelize.col('Flight.departure_airport_id'), "=", Sequelize.col('DepartureAirport.code')),
                     },
                 },
                 {
                     model: Airport,
                     as: "ArrivalAirport",
                     on: {
-                        col1: Sequelize.where(Sequelize.col('Flight.arrival_airport_id'), "=", Sequelize.col('ArrivalAirport.code')),
+                        col1: Sequelize.where
+                            (Sequelize.col('Flight.arrival_airport_id'), "=", Sequelize.col('ArrivalAirport.code')),
                     },
                 }
             ]

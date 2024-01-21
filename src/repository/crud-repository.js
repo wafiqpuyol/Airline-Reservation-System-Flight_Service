@@ -26,10 +26,6 @@ class CrudRepository {
         })
         return query;
     }
-
-    // async getFlight(data) {
-    //     //future need 
-    // }
 }
 
 

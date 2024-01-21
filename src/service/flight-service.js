@@ -53,6 +53,15 @@ class FlightService {
         }
     }
 
+    async getFlight(data) {
+        try {
+            const query = await flightRepository.findById(data);
+            return query;
+        } catch (error) {
+            throw errorGenerator(error)
+        }
+    }
+
 }
 
 module.exports = FlightService;
