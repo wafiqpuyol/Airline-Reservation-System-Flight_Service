@@ -17,7 +17,7 @@ class FlightRepository extends CrudRepository {
             include: [
                 {
                     model: Airplane,
-                    as: "airplane_details",
+                    as: "AirplaneDetail",
                     required: true
                 },
                 {
@@ -25,7 +25,7 @@ class FlightRepository extends CrudRepository {
                     as: "DepartureAirport",
                     on: {
                         col1: Sequelize.where
-                            (Sequelize.col('Flight.departure_airport_id'), "=", Sequelize.col('DepartureAirport.code')),
+                            (Sequelize.col('Flight.departureAirportCode'), "=", Sequelize.col('DepartureAirport.iataCode')),
                     },
                 },
                 {
@@ -33,7 +33,7 @@ class FlightRepository extends CrudRepository {
                     as: "ArrivalAirport",
                     on: {
                         col1: Sequelize.where
-                            (Sequelize.col('Flight.arrival_airport_id'), "=", Sequelize.col('ArrivalAirport.code')),
+                            (Sequelize.col('Flight.arrivalAirportCode'), "=", Sequelize.col('ArrivalAirport.iataCode')),
                     },
                 }
             ]
@@ -41,13 +41,42 @@ class FlightRepository extends CrudRepository {
         return query;
     }
 
-    async updateSeat(id, noOfSeat, dec = true) {
-        await db.sequelize.query(`SELECT * FROM FLIGHTS WHERE ID = ${id} FOR UPDATE`)
+    async getFlightById(id) {
+        const query = Flight.findByPk(id, {
+            include: [
+                {
+                    model: Airplane,
+                    as: "AirplaneDetail",
+                    required: true
+                },
+                {
+                    model: Airport,
+                    as: "DepartureAirport",
+                    on: {
+                        col1: Sequelize.where
+                            (Sequelize.col('Flight.departureAirportCode'), "=", Sequelize.col('DepartureAirport.iataCode')),
+                    },
+                },
+                {
+                    model: Airport,
+                    as: "ArrivalAirport",
+                    on: {
+                        col1: Sequelize.where
+                            (Sequelize.col('Flight.arrivalAirportCode'), "=", Sequelize.col('ArrivalAirport.iataCode')),
+                    },
+                }
+            ]
+        })
+        return query;
+    }
+
+    async updateRemainingSeat(id, noOfSeats, dec = true) {
+        await db.sequelize.query(`SELECT * FROM FLIGHTS WHERE ID = ${id} FOR UPDATE`);
         const flight = await Flight.findByPk(id);
         if (Number(dec)) {
-            await flight.decrement('total_seats', { by: noOfSeat })
+            await flight.decrement('total_seats', { by: noOfSeats })
         } else {
-            await flight.increment('total_seats', { by: noOfSeat })
+            await flight.increment('total_seats', { by: noOfSeats })
         }
         await flight.reload();
         return flight;
