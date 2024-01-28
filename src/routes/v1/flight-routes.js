@@ -16,7 +16,7 @@ router.get('/:id',
 )
 
 router.patch('/:id/seats',
-    FlightController.updateSeat
+    FlightController.updateRemainingSeat
 )
 
 

@@ -7,18 +7,8 @@ const flightService = new FlightService()
 
 const createFlight = async (req, res) => {
     try {
-        const flight = await flightService.createFlight({
-            flight_name: req.body.flight_name,
-            airplane_id: req.body.airplane_id,
-            airport_id: req.body.airport_id,
-            arrival_airport_id: req.body.arrival_airport_id,
-            departure_airport_id: req.body.departure_airport_id,
-            total_seats: req.body.total_seats,
-            price: req.body.price,
-            boarding_gate: req.body.boarding_gate,
-            arrival_time: req.body.arrival_time,
-            departure_time: req.body.departure_time,
-        })
+        console.log(req.body);
+        const flight = await flightService.createFlight({ ...req.body })
 
         SuccessResponse.message = "Flight created Successfully";
         SuccessResponse.data = flight;
@@ -26,6 +16,7 @@ const createFlight = async (req, res) => {
             .status(StatusCodes.OK)
             .json(SuccessResponse)
     } catch (error) {
+        console.log(error);
         ErrorResponse.message = "Something went wrong while creating Flight";
         ErrorResponse.error = error;
         return res
@@ -36,6 +27,7 @@ const createFlight = async (req, res) => {
 
 const getAllFlight = async (req, res) => {
     try {
+        console.log(req.query);
         const flight = await flightService.getAllFlight(req.query);
         SuccessResponse.message = 'Successfully Fetched all Flights';
         SuccessResponse.data = flight;
@@ -43,6 +35,7 @@ const getAllFlight = async (req, res) => {
             .status(StatusCodes.OK)
             .json(SuccessResponse);
     } catch (error) {
+        console.log(error);
         ErrorResponse.message = "Something went wrong while fetching flight";
         ErrorResponse.error = error;
         return res
@@ -69,9 +62,10 @@ const getFlight = async (req, res) => {
 }
 
 
-const updateSeat = async (req, res) => {
+const updateRemainingSeat = async (req, res) => {
+    console.log(req.body);
     try {
-        const flight = await flightService.updateSeat({ ...req.body, flightId: req.params.id })
+        const flight = await flightService.updateRemainingSeat({ ...req.body, flightId: req.params.id })
         SuccessResponse.message = 'Successfully Fetched Flight';
         SuccessResponse.data = flight;
         return res
@@ -85,4 +79,4 @@ const updateSeat = async (req, res) => {
             .json(ErrorResponse)
     }
 }
-module.exports = { createFlight, getAllFlight, getFlight, updateSeat }
+module.exports = { createFlight, getAllFlight, getFlight, updateRemainingSeat }

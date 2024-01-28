@@ -5,6 +5,7 @@ const utcTime = require("../utils/helper/utcTime");
 
 
 
+
 const flightRepository = new FlightRepository();
 
 class FlightService {
@@ -22,11 +23,11 @@ class FlightService {
         let customFilters = {};
 
         if (query.trips) {
-            const [departure_airport_id, arrival_airport_id] = query.trips.split('-');
+            const [departureAirportCode, arrivalAirportCode] = query.trips.split('-');
             customFilters = {
                 [Op.and]: [
-                    { departure_airport_id },
-                    { arrival_airport_id },
+                    { departureAirportCode },
+                    { arrivalAirportCode },
                 ]
             }
         }
@@ -39,13 +40,13 @@ class FlightService {
         }
 
         if (query.time) {
-            customFilters.departure_time = {
+            customFilters.departureTime = {
                 [Op.eq]: query.time
             }
         }
 
         try {
-            const flight = await flightRepository.getFlight(customFilters)
+            const flight = await flightRepository.getFlight()
             return flight;
         } catch (error) {
             console.log(error);
@@ -55,16 +56,17 @@ class FlightService {
 
     async getFlight(id) {
         try {
-            const query = await flightRepository.findById(id);
+            const query = await flightRepository.getFlightById(id);
             return query;
         } catch (error) {
+            console.log(error);
             throw errorGenerator(error)
         }
     }
 
-    async updateSeat(data) {
+    async updateRemainingSeat(data) {
         try {
-            const query = await flightRepository.updateSeat(data.flightId, data.noOfSeat, data.dec);
+            const query = await flightRepository.updateRemainingSeat(data.flightId, data.noOfSeats, data.dec);
             return query;
         } catch (error) {
             console.log(error);
