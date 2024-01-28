@@ -5,7 +5,12 @@ const SEAT_TYPE = {
     PREMIUM_ECONOMY: 'premiumEconomic',
 }
 
+const AIRPORT_TYPES = {
+    INTERNATIONAL: "international",
+    DOMESTIC: "domestic",
+}
 
 module.exports = {
     SEAT_TYPE,
+    AIRPORT_TYPES
 }

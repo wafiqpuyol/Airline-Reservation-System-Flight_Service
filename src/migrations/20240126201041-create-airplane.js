@@ -9,14 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      model_name: {
+      modelName: {
         type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
+        allowNull: false
       },
       capacity: {
         type: Sequelize.INTEGER,
-        // allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -1,6 +1,10 @@
 'use strict';
 const { Model } = require('sequelize');
 
+const { Enums: { AIRPORT_TYPES } } = require('../utils/common')
+const { DOMESTIC, INTERNATIONAL } = AIRPORT_TYPES
+
+
 module.exports = (sequelize, DataTypes) => {
   class Airport extends Model {
     /**
@@ -9,33 +13,43 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Airport.belongsTo(models.City, { foreignKey: 'cityId', onDelete: "CASCADE" })
-      Airport.hasMany(models.Flight, { as: "ArrivalAirport", foreignKey: 'arrival_airport_id', onDelete: "CASCADE" })
-      Airport.hasMany(models.Flight, { as: "DepartureAirport", foreignKey: 'departure_airport_id', onDelete: "CASCADE" })
+      // define association here
+      this.belongsTo(models.City, { as: "CityDetail", foreignKey: 'address', onDelete: "CASCADE" })
+      Airport.hasMany(models.Flight, { as: "ArrivalAirport", foreignKey: 'arrivalAirportCode', onDelete: "CASCADE" })
+      Airport.hasMany(models.Flight, { as: "DepartureAirport", foreignKey: 'departureAirportCode', onDelete: "CASCADE" })
+
     }
   }
   Airport.init({
     airportName: {
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
-    code: {
+    iataCode: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
     address: {
       type: DataTypes.STRING,
-      unique: true,
+      allowNull: false
     },
-    cityId: {
-      type: DataTypes.INTEGER
+    category: {
+      type: DataTypes.ENUM,
+      values: [DOMESTIC, INTERNATIONAL],
+      defaultValue: INTERNATIONAL,
+      allowNull: false
+    },
+    longitude: {
+      type: DataTypes.DOUBLE,
+    },
+    latitude: {
+      type: DataTypes.DOUBLE,
     },
   }, {
     sequelize,
     modelName: 'Airport',
   });
-
   return Airport;
 };

@@ -9,12 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      flight_name: {
+      flightName: {
         type: Sequelize.STRING,
+        allowNull: false,
         unique: true,
-        allowNull: false
       },
-      airplane_id: {
+      airplaneId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Airplanes',
@@ -22,43 +22,39 @@ module.exports = {
         },
         allowNull: false
       },
-      airport_id: {
-        type: Sequelize.INTEGER,
+      departureAirportCode: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Airports',
+          key: "iataCode"
+        },
         allowNull: false
       },
-      departure_airport_id: {
+      arrivalAirportCode: {
         type: Sequelize.STRING,
         references: {
-          model: "Airports",
-          key: "code"
-        },
-        allowNull: false,
-      },
-      arrival_airport_id: {
-        type: Sequelize.STRING,
-        references: {
-          model: "Airports",
-          key: "code"
-        },
-        allowNull: false,
+          model: 'Airports',
+          key: "iataCode"
+        }
       },
       price: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      boarding_gate: {
-        type: Sequelize.STRING
-      },
-      total_seats: {
+      totalSeats: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      arrival_time: {
-        type: Sequelize.DATEONLY,
+      arrivalTime: {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      departure_time: {
-        type: Sequelize.DATEONLY,
+      departureTime: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      oneWay: {
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       createdAt: {

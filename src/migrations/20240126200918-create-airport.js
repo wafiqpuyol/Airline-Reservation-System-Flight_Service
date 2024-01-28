@@ -1,5 +1,10 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
+const { Enums: { AIRPORT_TYPES } } = require('../utils/common')
+const { DOMESTIC, INTERNATIONAL } = AIRPORT_TYPES
+
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Airports', {
@@ -11,25 +16,33 @@ module.exports = {
       },
       airportName: {
         type: Sequelize.STRING,
+        allowNull: false,
         unique: true,
-        allowNull: false
       },
-      code: {
+      iataCode: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       address: {
         type: Sequelize.STRING,
-        unique: true,
-      },
-      cityId: {
-        type: Sequelize.INTEGER,
         references: {
           model: "Cities",
-          key: "id"
+          key: "cityName"
         },
-        onDelete: "CASCADE"
+        allowNull: false
+      },
+      category: {
+        type: Sequelize.ENUM,
+        values: [DOMESTIC, INTERNATIONAL],
+        defaultValue: INTERNATIONAL,
+        allowNull: false
+      },
+      longitude: {
+        type: Sequelize.DOUBLE
+      },
+      latitude: {
+        type: Sequelize.DOUBLE
       },
       createdAt: {
         allowNull: false,

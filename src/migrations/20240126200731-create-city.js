@@ -2,19 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Airlines', {
+    await queryInterface.createTable('Cities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      airlineId: {
+      airportCode: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true
       },
-      href: {
-        type: Sequelize.STRING
+      cityName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      regionCode: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      countryName: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      countryCode: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Airlines');
+    await queryInterface.dropTable('Cities');
   }
 };
