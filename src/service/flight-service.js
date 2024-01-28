@@ -46,7 +46,7 @@ class FlightService {
         }
 
         try {
-            const flight = await flightRepository.getFlight()
+            const flight = await flightRepository.getFlight(customFilters)
             return flight;
         } catch (error) {
             console.log(error);

@@ -12,52 +12,58 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-
-    await queryInterface.bulkInsert('Airplanes', [
+    await queryInterface.bulkInsert('Airlines', [
       {
-        modelName: 'Airbus A330',
-        capacity: 145,
+        name: "British Airways",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'Boeing 717',
-        capacity: 128,
+        name: "Virgin Atlantic",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'F-102A Delta Dagger',
-        capacity: 179,
+        name: "easyJet",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'B-25J Mitchell',
-        capacity: 121,
+        name: "Ryanair",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'C-54G Skymaster',
-        capacity: 159,
+        name: "Qatar Airways",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'VC-140B JetStar',
-        capacity: 148,
+        name: "Emirates",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        modelName: 'T-39A Sabreliner',
-        capacity: 169,
+        name: "Lufthansa",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Air France",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "KLM Royal Dutch Airlines",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Turkish Airlines",
         createdAt: new Date(),
         updatedAt: new Date()
       },
     ], {});
-
   },
 
   async down(queryInterface, Sequelize) {
@@ -66,6 +72,7 @@ module.exports = {
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-     */
+    */
+    await queryInterface.bulkDelete('Airlines', null, {});
   }
 };

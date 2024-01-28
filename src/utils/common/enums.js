@@ -1,8 +1,7 @@
 const SEAT_TYPE = {
     BUSINESS: 'business',
     ECONOMY: 'economy',
-    FIRST_CLASS: 'firstClass',
-    PREMIUM_ECONOMY: 'premiumEconomic',
+    FIRST: 'firstClass',
 }
 
 const AIRPORT_TYPES = {
@@ -10,7 +9,13 @@ const AIRPORT_TYPES = {
     DOMESTIC: "domestic",
 }
 
+const AVAILABILITY = {
+    AVAILABLE: "available",
+    BOOKED: "booked",
+}
+
 module.exports = {
     SEAT_TYPE,
-    AIRPORT_TYPES
+    AIRPORT_TYPES,
+    AVAILABILITY
 }

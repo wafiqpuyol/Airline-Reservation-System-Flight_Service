@@ -22,6 +22,14 @@ module.exports = {
         },
         allowNull: false
       },
+      airlineId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Airlines',
+          key: "id"
+        },
+        allowNull: false
+      },
       departureAirportCode: {
         type: Sequelize.STRING,
         references: {

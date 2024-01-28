@@ -20,6 +20,14 @@ const validateCreateRequest = (req, res, next) => {
             .json(ErrorResponse)
     }
 
+    if (!req.body.airlineId) {
+        ErrorResponse.message = "Please enter a Airline Id";
+        ErrorResponse.error = errorGenerator('Invalid Airline Id');
+        return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json(ErrorResponse)
+    }
+
     if (!req.body.arrivalAirportCode) {
         ErrorResponse.message = "Please enter a Arrival Airport Code";
         ErrorResponse.error = errorGenerator('Invalid Arrival Airport Code');

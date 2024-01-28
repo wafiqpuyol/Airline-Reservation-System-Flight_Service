@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Flight.belongsTo(models.Airport, { as: "ArrivalAirport", foreignKey: 'arrivalAirportCode', onDelete: "CASCADE" })
       Flight.belongsTo(models.Airport, { as: "DepartureAirport", foreignKey: 'departureAirportCode', onDelete: "CASCADE" })
       Flight.belongsTo(models.Airplane, { as: "AirplaneDetail", foreignKey: 'airplaneId', onDelete: "CASCADE" })
+      Flight.belongsTo(models.Airline, { as: "Airline", foreignKey: 'airlineId', onDelete: "CASCADE" })
     }
   }
   Flight.init({
@@ -23,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     airplaneId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    airlineId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

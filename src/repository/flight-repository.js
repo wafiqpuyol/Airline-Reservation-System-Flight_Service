@@ -3,6 +3,7 @@ const { Flight } = require('../models')
 const db = require('../models')
 const { Airplane } = require('../models')
 const { Airport } = require('../models')
+const { Airline } = require('../models')
 const CrudRepository = require('./crud-repository')
 
 
@@ -18,6 +19,11 @@ class FlightRepository extends CrudRepository {
                 {
                     model: Airplane,
                     as: "AirplaneDetail",
+                    required: true
+                },
+                {
+                    model: Airline,
+                    as: "Airline",
                     required: true
                 },
                 {
@@ -47,6 +53,11 @@ class FlightRepository extends CrudRepository {
                 {
                     model: Airplane,
                     as: "AirplaneDetail",
+                    required: true
+                },
+                {
+                    model: Airline,
+                    as: "Airline",
                     required: true
                 },
                 {
