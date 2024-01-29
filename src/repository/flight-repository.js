@@ -1,11 +1,14 @@
-const { Sequelize } = require('sequelize')
-const { Flight } = require('../models')
+const { Sequelize, Op } = require('sequelize')
 const db = require('../models')
+
+
+const CrudRepository = require('./crud-repository')
+const { Flight } = require('../models')
 const { Airplane } = require('../models')
 const { Airport } = require('../models')
 const { Airline } = require('../models')
-const CrudRepository = require('./crud-repository')
-
+const { Seat } = require('../models')
+const { flightRowLock, seatRowLock } = require('../utils/common/queries')
 
 class FlightRepository extends CrudRepository {
     constructor() {
@@ -81,15 +84,46 @@ class FlightRepository extends CrudRepository {
         return query;
     }
 
+    async getAllSeats(airplaneId) {
+        const query = await Seat.findAll(
+            {
+                where: {
+                    airplaneId: airplaneId
+                }
+            }
+        )
+        return query;
+    }
+
+    async updateSeatDB(data) {
+        const { seatAvailability, airplaneId, seatNumber } = data;
+        // lock individual row 
+        seatNumber.forEach(async (number) => await db.sequelize.query(seatRowLock(airplaneId, number)))
+        const query = await Seat.update({ seatAvailability: seatAvailability },
+            {
+                where: {
+                    airplaneId: airplaneId,
+                    number: {
+                        [Op.in]: seatNumber
+                    }
+                }
+            }
+        )
+        return query;
+    }
+
     async updateRemainingSeat(id, noOfSeats, dec = true) {
-        await db.sequelize.query(`SELECT * FROM FLIGHTS WHERE ID = ${id} FOR UPDATE`);
+        // add row lock
+        await db.sequelize.query(flightRowLock(id));
+
         const flight = await Flight.findByPk(id);
         if (Number(dec)) {
-            await flight.decrement('total_seats', { by: noOfSeats })
+            await flight.decrement('totalSeats', { by: noOfSeats })
         } else {
-            await flight.increment('total_seats', { by: noOfSeats })
+            await flight.increment('totalSeats', { by: noOfSeats })
         }
         await flight.reload();
+
         return flight;
     }
 }

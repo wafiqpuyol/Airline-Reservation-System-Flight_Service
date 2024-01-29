@@ -61,6 +61,23 @@ const getFlight = async (req, res) => {
     }
 }
 
+const getAllSeats = async (req, res) => {
+    try {
+        const seat = await flightService.getAllSeats(req.params.id)
+        SuccessResponse.message = 'Successfully Fetched All Seats';
+        SuccessResponse.data = seat;
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong while fetching Seats";
+        ErrorResponse.error = error;
+        return res
+            .status(error.statusCode)
+            .json(ErrorResponse)
+    }
+}
+
 
 const updateRemainingSeat = async (req, res) => {
     console.log(req.body);
@@ -79,4 +96,22 @@ const updateRemainingSeat = async (req, res) => {
             .json(ErrorResponse)
     }
 }
-module.exports = { createFlight, getAllFlight, getFlight, updateRemainingSeat }
+
+const updateSeatDB = async (req, res) => {
+    try {
+        const seatNumber = req.params.seatNumber.split("-")
+        const flight = await flightService.updateSeatDB({ ...req.body, airplaneId: req.params.id, seatNumber })
+        SuccessResponse.message = 'Successfully updated Seat Database';
+        SuccessResponse.data = flight;
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse);
+    } catch (error) {
+        ErrorResponse.message = "Something went wrong while updating Seat Database";
+        ErrorResponse.error = error;
+        return res
+            .status(error.statusCode)
+            .json(ErrorResponse)
+    }
+}
+module.exports = { createFlight, getAllFlight, getFlight, updateRemainingSeat, getAllSeats, updateSeatDB }

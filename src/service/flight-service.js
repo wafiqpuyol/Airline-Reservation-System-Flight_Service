@@ -74,6 +74,25 @@ class FlightService {
         }
     }
 
+    async getAllSeats(airplaneId) {
+        try {
+            const query = await flightRepository.getAllSeats(airplaneId);
+            return query;
+        } catch (error) {
+            console.log(error);
+            throw errorGenerator(error)
+        }
+    }
+
+    async updateSeatDB(data) {
+        try {
+            const query = await flightRepository.updateSeatDB(data);
+            return query;
+        } catch (error) {
+            console.log(error);
+            throw errorGenerator(error)
+        }
+    }
 }
 
 module.exports = FlightService;
