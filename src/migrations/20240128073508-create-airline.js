@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true
+        },
+        unique: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
